@@ -1,7 +1,7 @@
 # Use Python slim image
 FROM python:3.10-slim
 
-# Install required system dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y build-essential
 
 # Set working directory
@@ -14,9 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application files
 COPY . .
 
-# Expose default Streamlit port
+# Expose Streamlit port
 EXPOSE 8501
 
-# Run Streamlit
-ENTRYPOINT ["streamlit"]
-CMD ["run", "stock_streamlit_sql.py", "--server.enableCORS=false"]
+# Use python -m to avoid PATH issues
+CMD ["python", "-m", "streamlit", "run", "stock_streamlit_sql.py", "--server.enableCORS=false"]
